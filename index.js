@@ -15,8 +15,11 @@ const port = '3000';
 db.defaults({todos: []}).write()
 
 app.use(bodyParser.json())
-.use(bodyParser.urlencoded({extended: false}))
+.set('views', './views')
 .use(express.static(__dirname + '/public'))
+
+.use(bodyParser.urlencoded({extended: false}))
+
 
 .get('/todo', (req, res) => {
   let todos = db.get('todos').filter({status: "todo"}).value();

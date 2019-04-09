@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MEU TODO LIST</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/index.css" />
+
+    <script type="text/javascript">
+      class Todo {
+        returnTodoInput() {
+          return document.getElementById('todo');
+        }
+
+        fazRequest(url, options) {
+          fetch(url, options)
+            .then((res) => {return res.text();})
+            .then((data) => {console.log(data); window.location.href = '/todo'})
+        }
+
+        adicionaTodo() {
+          todo.fazRequest('/todo/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({title: todo.returnTodoInput().value, status: "todo"})})
+        }
+
+        deleteTodo(todoId) {
+          todo.fazRequest('/todo/' + todoId, {method: 'DELETE'})
+        }
+
+        updateTodo(todoId) {
+          todo.fazRequest('/todo/' + todoId, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({id: parseInt(todoId), title: todo.returnTodoInput().value})})
+        }
+
+        doing(todoId) {
+          todo.fazRequest('/todo/' + todoId, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({status: "doing"})})
+        }
+
+        finalizarTodo(todoId) {
+          todo.fazRequest('/todo/' + todoId, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({status: "done"})})
+        }
+
+        alterar(todoId) {
+          let tarefa = document.getElementById(`todo-${todoId}`);
+          let input = todo.returnTodoInput();
+
+          input.value = tarefa.innerHTML;
+          input.setAttribute('data-id', todoId);
+        }
+
+        salvarTodo() {
+          let input = todo.returnTodoInput();
+          let dataId = input.getAttribute('data-id');
+
+          if (dataId === '') {
+            todo.adicionaTodo()
+          } else {
+            todo.updateTodo(dataId)
+          }
+        }
+
+        
+      }
+
+      let todo = new Todo();
+    </script>
+
+  </head>
+  <body>
+    <h1 style="margin-left: 100px">AAAAAAAAAAAAAAAAAAAAA</h1>
+    <% todos.forEach((todo, index) => { %>
+      <li>
+        <span id="todo-<%=todo.id%>"> <%= todo.title %> </span>
+        <button onClick="todo.alterar(<%= todo.id %>)">Alterar</button>
+        <button onClick="todo.deleteTodo(<%= todo.id %>)">Excluir</button>
+        <button onClick="todo.doing(<%= todo.id %>)">Fazer agora</button>
+      </li>
+    <% }); %>
+    <br/><label> Adicione uma tarefa </label>
+    <input data-id="" type="text" name="todo" id="todo"/>
+    <button onClick="todo.salvarTodo()">Salvar</button>
+    <h1>Fazendo agora</h1>
+    <% doing.forEach((todo, index) => { %>
+      <li>
+        <%= todo.title %>
+        <button onClick="todo.finalizarTodo(<%= todo.id %>)">Finalizar tarefa</button>
+      </li>
+    <% }); %>
+    <h1>Feito</h1>
+    <% done.forEach((todo, index) => { %>
+      <li class="finalizado">
+        <%= todo.title %>
+      </li>
+    <% }); %>
+  </body>
+</html>

@@ -1,3 +1,14 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "title": "rodrigo",
+      "status": "done",
+      "id": 1
+    },
+    {
+      "title": "julia",
+      "status": "todo",
+      "id": 2
+    }
+  ]
 }
