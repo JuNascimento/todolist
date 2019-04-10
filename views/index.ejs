@@ -3,7 +3,7 @@
   <head>
     <title>MEU TODO LIST</title>
 
-    <link rel="stylesheet" type="text/css" href="/css/app.css" />
+    <link rel="stylesheet" type="text/css" href="/css/index.css" />
 
     <script type="text/javascript">
       class Todo {
@@ -18,7 +18,7 @@
         }
 
         adicionaTodo() {
-          todo.fazRequest('/todo/add', {
+          todo.fazRequest('/todo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({title: todo.returnTodoInput().value, status: "todo"})})
@@ -75,10 +75,10 @@
     </script>
 
   </head>
-  <body>
-    <h1>TO CHEIA DE COISA PRA FAZER SOCORRO</h1>
+  <body class="corpo">
+    <h1>TENHO MUITA COISA PRA FAZER SOCORRO</h1>
     <% todos.forEach((todo, index) => { %>
-      <li>
+      <li class="todoList">
         <span id="todo-<%=todo.id%>"> <%= todo.title %> </span>
         <button onClick="todo.alterar(<%= todo.id %>)">Alterar</button>
         <button onClick="todo.deleteTodo(<%= todo.id %>)">Excluir</button>

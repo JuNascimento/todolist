@@ -30,7 +30,7 @@ app.use(bodyParser.json())
   res.render('index.ejs', {todos: todos, doing: doing, done: done});
 })
 
-.post('/todo/add', (req, res) => {
+.post('/todo', (req, res) => {
   if(req.body.todo != '') {
     if (db.get('todos').value().length === 0) {
       db.get('todos').push({title: req.body.title, status: "todo", id: 1}).write()  

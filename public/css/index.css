@@ -1,0 +1,12 @@
+.corpo {
+	margin-left: 100px;
+}
+
+.todoList {
+	list-style-type: none;
+}
+
+.finalizado {
+	list-style-type: none;
+	text-decoration: line-through;
+}
